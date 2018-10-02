@@ -1,0 +1,64 @@
+{
+  "customerData": [
+    {
+      "loanSize": 450000,
+      "creditScore": 700,
+      "propertyType": "SingleFamily",
+      "occupancy": "Primary"
+    },
+    {
+      "loanSize": 200000,
+      "creditScore": 640,
+      "propertyType": "Condo",
+      "occupancy": "Primary"
+    },
+    {
+      "loanSize": 750000,
+      "creditScore": 750,
+      "propertyType": "SingleFamily",
+      "occupancy": "Secondary"
+    },
+    {
+      "loanSize": 560000,
+      "creditScore": 670,
+      "propertyType": "Townhouse",
+      "occupancy": "Primary"
+    },
+    {
+      "loanSize": 120000,
+      "creditScore": 560,
+      "propertyType": "Condo",
+      "occupancy": "Primary"
+    },
+    {
+      "loanSize": 900000,
+      "creditScore": 740,
+      "propertyType": "MultiFamily",
+      "occupancy": "Investment"
+    },
+    {
+      "loanSize": 250000,
+      "creditScore": 760,
+      "propertyType": "Townhouse",
+      "occupancy": "Primary"
+    },
+    {
+      "loanSize": 670000,
+      "creditScore": 710,
+      "propertyType": "SingleFamily",
+      "occupancy": "Primary"
+    },
+    {
+      "loanSize": 810000,
+      "creditScore": 780,
+      "propertyType": "MultiFamily",
+      "occupancy": "Primary"
+    },
+    {
+      "loanSize": 400000,
+      "creditScore": 630,
+      "propertyType": "Condo",
+      "occupancy": "Primary"
+    }
+  ]
+}
