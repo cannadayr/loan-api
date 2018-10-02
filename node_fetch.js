@@ -13,11 +13,18 @@ const cooldown = 3;
 var custDataLen = data['customerData'].length;
 for (var i = 0; i < custDataLen; i++) {
 
+    var result = getCustData(data['customerData'][i]);
+
+}
+
+function getCustData(thisCust) {
     // log cust data
     //console.log(data['customerData'][i]);
 
     // set data to local var
-    var thisCust = data['customerData'][i];
+    //var thisCust = data['customerData'][i];
+    //console.log(thisCust);
+    //process.exit();
 
     // set url params
     var params = {
@@ -41,16 +48,19 @@ for (var i = 0; i < custDataLen; i++) {
             headers: { 'Authorization': 'RG-AUTH ' + process.env.RG_AUTH }
         })
         .then(res => res.json())
-        .then(json => handleReq(json));
+        .then(json => handleReq(thisCust, json));
 
 }
 
-function handleReq(data) {
+function handleReq(thisCust,data) {
     // log json input
     //console.log(data);
+    //console.log(thisCust);
+    //process.exit();
 
     // set empty output var
-    var currentLowest = [];
+    var currentLowestRate;
+    var currentLowestQuote;
 
     // get num of quotes
     var numQuotes = data['rateQuotes'].length;
@@ -67,13 +77,37 @@ function handleReq(data) {
             continue;
         }
         else {
-            console.log(thisQuote);
+
             // check if we've got the lowest interest rate
             var thisRate = thisQuote['interestRate'];
-            console.log(thisRate);
+
+            // log the current quote
+            //console.log(thisQuote);
+            //console.log(thisRate);
+            //console.log(currentLowestRate);
+
+            if (
+                currentLowestRate == undefined
+                || thisRate < currentLowestRate
+            ) {
+                //console.log('setting lowest quote');
+
+                // it has a lower interest rate, set it
+                currentLowestRate = thisRate;
+                currentLowestQuote = thisQuote;
+            }
+
+            // TODO push to an array if it has the same interest rate
         }
     }
 
-    // get only 30yr fixed loan types
-    process.exit();
+    console.log('------------------------------------');
+    //console.log(currentLowestQuote);
+
+    // assemble the output object
+    thisCust['lowestQuote'] = currentLowestQuote;
+    console.log(thisCust);
+
+    // exit after a single iteration
+    //process.exit();
 }
