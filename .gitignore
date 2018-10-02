@@ -1,2 +1,2 @@
 *.sw*
-env.sh
+.env
