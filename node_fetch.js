@@ -26,17 +26,54 @@ for (var i = 0; i < custDataLen; i++) {
         propertyType: thisCust['propertyType'],
         occupancy: thisCust['occupancy']
     };
-    console.log(params);
-    process.exit();
 
+    // log params
+    //console.log(params);
+
+    // encode params
     let queryString = querystring.stringify(params);
 
-    console.log(queryString);
+    // log query str
+    //console.log(queryString);
 
+    // set headers, append query str, & fetch the url
     fetch(baseUrl + queryString,{
             headers: { 'Authorization': 'RG-AUTH ' + process.env.RG_AUTH }
         })
         .then(res => res.json())
-        .then(json => console.log(json));
+        .then(json => handleReq(json));
+
 }
 
+function handleReq(data) {
+    // log json input
+    //console.log(data);
+
+    // set empty output var
+    var currentLowest = [];
+
+    // get num of quotes
+    var numQuotes = data['rateQuotes'].length;
+
+    // loop thru quotes
+    for (var i = 0; i < numQuotes; i++){
+        var thisQuote = data['rateQuotes'][i];
+
+        // log
+        //console.log(thisQuote);
+
+        // disregard quotes that aren't 30 yr fixed
+        if (thisQuote['loanType'] != '30YR Fixed') {
+            continue;
+        }
+        else {
+            console.log(thisQuote);
+            // check if we've got the lowest interest rate
+            var thisRate = thisQuote['interestRate'];
+            console.log(thisRate);
+        }
+    }
+
+    // get only 30yr fixed loan types
+    process.exit();
+}
