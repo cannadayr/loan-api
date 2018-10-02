@@ -5,9 +5,10 @@ CREDIT="&creditScore=700"
 PROPERTY="&propertyType=SingleFamily"
 OCCUPANCY="&occupancy=Primary"
 LOAN="&loanSize=450000"
-PARAMS="${CREDIT}${PROPERTY}${OCCUPANCY}${LOAN}"
+TYPE="&loanType=30YR%20Fixed"
+PARAMS="${CREDIT}${PROPERTY}${OCCUPANCY}${LOAN}${TYPE}"
 URL="${BASE_URL}${PARAMS}"
-#echo "url = '${URL}'"
+echo "url = '${URL}'"
 curl --header "Authorization: RG-AUTH ${RG_AUTH}" ${URL}
 echo
 
