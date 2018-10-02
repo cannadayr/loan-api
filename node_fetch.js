@@ -3,24 +3,40 @@
 const fetch = require('node-fetch');
 const querystring = require('querystring');
 require('dotenv').config()
+const data = require('./code-challenge.json');
 
 // api specific vars
-const base_url = "https://ss6b2ke2ca.execute-api.us-east-1.amazonaws.com/Prod/quotes?";
+const baseUrl = "https://ss6b2ke2ca.execute-api.us-east-1.amazonaws.com/Prod/quotes?";
+const cooldown = 3;
 
-var params = {
-    creditScore: 700,
-    propertyType: "SingleFamily",
-    occupancy: "Primary",
-    loanSize: 450000
-};
+// get length of cust data
+var custDataLen = data['customerData'].length;
+for (var i = 0; i < custDataLen; i++) {
 
-let query_string = querystring.stringify(params);
+    // log cust data
+    //console.log(data['customerData'][i]);
 
-console.log(query_string);
+    // set data to local var
+    var thisCust = data['customerData'][i];
 
-fetch(base_url + query_string,{
-        headers: { 'Authorization': 'RG-AUTH ' + process.env.RG_AUTH }
-    })
-    .then(res => res.json())
-    .then(json => console.log(json));
+    // set url params
+    var params = {
+        loanSize: thisCust['loanSize'],
+        creditScore: thisCust['creditScore'],
+        propertyType: thisCust['propertyType'],
+        occupancy: thisCust['occupancy']
+    };
+    console.log(params);
+    process.exit();
+
+    let queryString = querystring.stringify(params);
+
+    console.log(queryString);
+
+    fetch(baseUrl + queryString,{
+            headers: { 'Authorization': 'RG-AUTH ' + process.env.RG_AUTH }
+        })
+        .then(res => res.json())
+        .then(json => console.log(json));
+}
 
