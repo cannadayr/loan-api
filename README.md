@@ -3,7 +3,7 @@ a simple API fetch & parsing example
 
 ## How-to
 How to add token:
-    * add a file named '.env' in root dir with your auth token (see .env-example for expected format)
+* add a file named '.env' in root dir with your auth token (see .env-example for expected format)
 
 How to run example:
 ```
@@ -21,12 +21,12 @@ How to run tests:
 * querystring: used to build url from parameters
 
 ## files
-    * node_fetch.js : primary entrance
-    * run_tests.sh : run tests
-    * src/ : contains exported functions called in node_fetch.js
-    * test_data: contains data used for testing
+* node_fetch.js : primary entrance
+* run_tests.sh : run tests
+* src/ : contains exported functions called in node_fetch.js
+* test_data: contains data used for testing
 
 ## Requirements
-    * Some ecmascript functions might be used, currently tested on nodejs version 'v8.11.2'
-    * basic unix utils for testing
+* Some ecmascript functions might be used, currently tested on nodejs version 'v8.11.2'
+* basic unix utils for testing
 
