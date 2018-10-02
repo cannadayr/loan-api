@@ -12,6 +12,7 @@
   "author": "Rowan Cannaday",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^6.0.0",
     "node-fetch": "^2.2.0"
   }
 }
