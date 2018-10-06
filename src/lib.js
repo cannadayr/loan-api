@@ -3,34 +3,42 @@ const querystring = require('querystring');
 
 // global vars
 const baseUrl = "https://ss6b2ke2ca.execute-api.us-east-1.amazonaws.com/Prod/quotes?";
+//const verbose = true;
+const verbose = false;
 
+// internal debug function to switch on/off
+exports.debug = function(name,variable) {
+    if (verbose) {
+        console.log(name,' = ',variable);
+    }
+    else {
+        // noop
+    }
+}
 exports.getCustData = function(thisCust) {
-    // log cust data
-    //console.log(data['customerData'][i]);
 
-    // set data to local var
-    //var thisCust = data['customerData'][i];
-    //console.log(thisCust);
-    //process.exit();
+    // log cust data
+    this.debug('thisCust',thisCust);
 
     // set url params
-    var params = {
+    var urlParams = {
         loanSize: thisCust['loanSize'],
         creditScore: thisCust['creditScore'],
         propertyType: thisCust['propertyType'],
         occupancy: thisCust['occupancy']
     };
 
-    // log params
-    //console.log(params);
+    // log urlParams
+    this.debug('urlParams',urlParams);
 
     // encode params
-    let queryString = querystring.stringify(params);
+    let queryString = querystring.stringify(urlParams);
 
     // log query str
-    //console.log(queryString);
+    this.debug('queryString',queryString);
 
     // set headers, append query str, & fetch the url
+    // return the promise object
     return fetch(baseUrl + queryString,{
             headers: { 'Authorization': 'RG-AUTH ' + process.env.RG_AUTH }
     }).then(res => res.json())
@@ -41,8 +49,8 @@ exports.getCustData = function(thisCust) {
 exports.handleReq = function(thisCust,data) {
 
     // log input
-    //console.log(data);
-    //console.log(thisCust);
+    this.debug('data',data);
+    this.debug('thisCust',thisCust);
 
     // set the result to the customer data
     var thisResult = thisCust;
@@ -59,7 +67,7 @@ exports.handleReq = function(thisCust,data) {
         var thisQuote = data['rateQuotes'][i];
 
         // log
-        //console.log(thisQuote);
+        this.debug('thisQuote',thisQuote);
 
         // disregard quotes that aren't 30 yr fixed
         if (thisQuote['loanType'] != '30YR Fixed') {
@@ -70,16 +78,19 @@ exports.handleReq = function(thisCust,data) {
             // check if we've got the lowest interest rate
             var thisRate = thisQuote['interestRate'];
 
-            // log the current quote
-            //console.log(thisQuote);
-            //console.log(thisRate);
-            //console.log(currentLowestRate);
+            // log details
+            this.debug('thisQuote',thisQuote);
+            this.debug('thisRate',thisRate);
+            this.debug('currentLowestRate',currentLowestRate);
 
+            // if the lowestRate is undefined (first iteration)
+            // or the current rate is less than it
+            // set it as the new lowest rate
             if (
                 currentLowestRate == undefined
                 || thisRate < currentLowestRate
             ) {
-                //console.log('setting lowest quote');
+                this.debug('setting lowest quote');
 
                 // it has a lower interest rate, set it
                 currentLowestRate = thisRate;
@@ -90,14 +101,12 @@ exports.handleReq = function(thisCust,data) {
         }
     }
 
-    //console.log(currentLowestQuote);
+    this.debug('currentLowestQuote',currentLowestQuote);
 
     // assemble the rest of the output object
     thisResult['lowestQuote'] = currentLowestQuote;
 
-    // #TODO, figure out how to organize code as-to be able to return the object
-    // javascript promise chaining is #weird
-    //console.log(thisResult);
+    this.debug('thisResult',thisResult);
     return thisResult;
 }
 

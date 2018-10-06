@@ -19,7 +19,7 @@ for (var i = 0; i < custDataLen; i++) {
     results.push(lib.getCustData(data['customerData'][i]));
 }
 
-console.log(results);
+lib.debug('results',results);
 var promises = Promise.all(results).then(values => {
     console.log(values);
 });
