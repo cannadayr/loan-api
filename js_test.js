@@ -13,5 +13,7 @@ const lib = require('./src/lib.js');
 // get length of cust data
 var custDataLen = data.length;
 
-lib.handleReq(data,quotes);
+var result = lib.handleReq(data,quotes);
+
+console.log(result);
 
