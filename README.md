@@ -28,5 +28,5 @@ How to run tests:
 
 ## Requirements
 * Some ecmascript functions might be used, currently tested on nodejs version 'v8.11.2'
-* basic unix utils for testing
+* basic unix utils
 
