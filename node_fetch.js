@@ -6,8 +6,15 @@ require('dotenv').config()
 // import data
 const data = require('./code-challenge.json');
 
-// import lib
+// import libs
 const lib = require('./src/lib.js');
+const fs = require('fs');
+
+// test for api token
+if (fs.existsSync('.env')) {
+    console.log('no environmental token! see .env-example & README');
+    process.exit(1);
+}
 
 // get length of cust data
 var custDataLen = data['customerData'].length;
