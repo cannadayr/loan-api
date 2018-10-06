@@ -13,9 +13,14 @@ const lib = require('./src/lib.js');
 var custDataLen = data['customerData'].length;
 
 // iterate thru data and call library function
+results = [];
 for (var i = 0; i < custDataLen; i++) {
 
-    lib.getCustData(data['customerData'][i]);
-
+    results.push(lib.getCustData(data['customerData'][i]));
 }
+
+console.log(results);
+var promises = Promise.all(results).then(values => {
+    console.log(values);
+});
 

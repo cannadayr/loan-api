@@ -31,7 +31,7 @@ exports.getCustData = function(thisCust) {
     //console.log(queryString);
 
     // set headers, append query str, & fetch the url
-    fetch(baseUrl + queryString,{
+    return fetch(baseUrl + queryString,{
             headers: { 'Authorization': 'RG-AUTH ' + process.env.RG_AUTH }
     }).then(res => res.json())
       .then(json => this.handleReq(thisCust, json));
@@ -97,6 +97,7 @@ exports.handleReq = function(thisCust,data) {
 
     // #TODO, figure out how to organize code as-to be able to return the object
     // javascript promise chaining is #weird
-    console.log(thisResult);
+    //console.log(thisResult);
+    return thisResult;
 }
 
