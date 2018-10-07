@@ -12,7 +12,7 @@ How to run example:
 
 How to run tests:
 ```
-./run_tests.sh
+./run_tests.js
 ```
 
 ## Library Descriptions
@@ -22,7 +22,7 @@ How to run tests:
 
 ## files
 * node_fetch.js : primary entrance
-* run_tests.sh : run tests
+* run_tests.js : run tests
 * src/ : contains exported functions called in node_fetch.js
 * test_data: contains data used for testing
 

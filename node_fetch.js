@@ -11,7 +11,7 @@ const lib = require('./src/lib.js');
 const fs = require('fs');
 
 // test for api token
-if (fs.existsSync('.env')) {
+if (!fs.existsSync('.env')) {
     console.log('no environmental token! see .env-example & README');
     process.exit(1);
 }
