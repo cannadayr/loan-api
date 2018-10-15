@@ -9,7 +9,12 @@ const verbose = true;
 // internal debug function to switch on/off
 exports.debug = function(name,variable) {
     if (verbose) {
-        console.log(name,' = ',variable);
+        if (variable != undefined) {
+            console.log(name,' = ',variable);
+        }
+        else {
+            console.log(name);
+        }
     }
     else {
         // noop
