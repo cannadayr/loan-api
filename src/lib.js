@@ -18,7 +18,7 @@ exports.debug = function(name,variable) {
 exports.getCustData = function(thisCust) {
 
     // log cust data
-    this.debug('thisCust',thisCust);
+    //this.debug('thisCust',thisCust);
 
     // set url params
     var urlParams = {
@@ -29,13 +29,13 @@ exports.getCustData = function(thisCust) {
     };
 
     // log urlParams
-    this.debug('urlParams',urlParams);
+    //this.debug('urlParams',urlParams);
 
     // encode params
     let queryString = querystring.stringify(urlParams);
 
     // log query str
-    this.debug('queryString',queryString);
+    //this.debug('queryString',queryString);
 
     // set headers, append query str, & fetch the url
     // return the promise object
@@ -46,67 +46,85 @@ exports.getCustData = function(thisCust) {
 
 }
 
-exports.handleReq = function(thisCust,data) {
+/*
+exports.accumulator = function() {
+    
+}
+*/
 
-    // log input
-    this.debug('data',data);
-    this.debug('thisCust',thisCust);
+exports.reducer = function(currentLowestQuote, thisQuote) {
+    console.log('#############################################');
 
-    // set the result to the customer data
-    var thisResult = thisCust;
+    this.debug('currentLowestQuote',currentLowestQuote);
+    this.debug('thisQuote',thisQuote);
 
-    // set empty output var
-    var currentLowestRate;
-    var currentLowestQuote;
+    if (
+        Object.keys(currentLowestQuote).length != 0
+        && currentLowestQuote['loanType'] != '30YR Fixed'
+    ) {
+        // we haven't gotten a valid quote yet
+        // return an empty object as the accumulator
+        return {};
+    }
+    else {
 
-    // get num of quotes
-    var numQuotes = data['rateQuotes'].length;
+        var currentLowestRate = currentLowestQuote['interestRate'];
+        this.debug('currentLowestRate',currentLowestRate);
 
-    // loop thru quotes
-    for (var i = 0; i < numQuotes; i++){
-        var thisQuote = data['rateQuotes'][i];
-
-        // log
-        this.debug('thisQuote',thisQuote);
-
-        // disregard quotes that aren't 30 yr fixed
         if (thisQuote['loanType'] != '30YR Fixed') {
-            continue;
+            console.log('its not 30yr fixed! returning previous lowest quote');
+            return currentLowestQuote;
         }
         else {
-
             // check if we've got the lowest interest rate
             var thisRate = thisQuote['interestRate'];
 
             // log details
-            this.debug('thisQuote',thisQuote);
-            this.debug('thisRate',thisRate);
-            this.debug('currentLowestRate',currentLowestRate);
+            //this.debug('thisRate',thisRate);
 
             // if the lowestRate is undefined (first iteration)
             // or the current rate is less than it
             // set it as the new lowest rate
             if (
-                currentLowestRate == undefined
-                || thisRate < currentLowestRate
+                thisRate < currentLowestRate
+                || currentLowestRate == undefined
             ) {
-                this.debug('setting lowest quote');
+                console.log('setting lowest quote');
 
-                // it has a lower interest rate, set it
-                currentLowestRate = thisRate;
-                currentLowestQuote = thisQuote;
+                return thisQuote;
+            }
+            else {
+                return currentLowestQuote;
             }
 
             // TODO push to an array if it has the same interest rate
+
         }
     }
+}
 
-    this.debug('currentLowestQuote',currentLowestQuote);
+exports.handleReq = function(thisCust,data) {
+
+    // log input
+    //this.debug('data',data);
+    //this.debug('thisCust',thisCust);
+
+    // set the result to the customer data
+    var thisResult = thisCust;
+
+    // set empty output var
+    //var currentLowestRate;
+    //var currentLowestQuote;
+
+    // get num of quotes
+    //var numQuotes = data['rateQuotes'].length;
+
+    // loop thru quotes
+    return data['rateQuotes'].reduce(this.reducer.bind(this));
 
     // assemble the rest of the output object
-    thisResult['lowestQuote'] = currentLowestQuote;
+    //thisResult['lowestQuote'] = currentLowestQuote;
 
-    this.debug('thisResult',thisResult);
-    return thisResult;
+    //this.debug('thisResult',thisResult);
 }
 
