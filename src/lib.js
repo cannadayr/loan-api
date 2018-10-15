@@ -3,8 +3,8 @@ const querystring = require('querystring');
 
 // global vars
 const baseUrl = "https://ss6b2ke2ca.execute-api.us-east-1.amazonaws.com/Prod/quotes?";
-//const verbose = true;
-const verbose = false;
+const verbose = true;
+//const verbose = false;
 
 // internal debug function to switch on/off
 exports.debug = function(name,variable) {

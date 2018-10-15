@@ -20,14 +20,15 @@ if (!fs.existsSync('.env')) {
 var custDataLen = data['customerData'].length;
 
 // iterate thru data and call library function
-results = [];
-for (var i = 0; i < custDataLen; i++) {
+//results = [];
+var mapResult = data['customerData'].map(function(val){
+    var custData = lib.getCustData(val);
+    return custData;
+});
 
-    results.push(lib.getCustData(data['customerData'][i]));
-}
+lib.debug('mapResult',mapResult);
 
-lib.debug('results',results);
-var promises = Promise.all(results).then(values => {
-    console.log(values);
+Promise.all(mapResult).then(values => {
+    lib.debug('finalResults', values);
 });
 
